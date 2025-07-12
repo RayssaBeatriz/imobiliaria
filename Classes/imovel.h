@@ -2,8 +2,8 @@
 #include <string>
 using namespace std;
 
-#ifndef CORRETOR_H
-#define CORRETOR_H
+#ifndef IMOVEL_H
+#define IMOVEL_H
 
 //Classe imovel
 class Imovel {

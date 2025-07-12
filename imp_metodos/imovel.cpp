@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-#include "Classes/imovel.h"
+#include "../Classes/imovel.h"
  
 //Construtor
 Imovel::Imovel(string tipo, int proprietarioId, float lat, float lon, double preco, string endereco){
