@@ -16,7 +16,7 @@ public:
     TipoImovel tipo;
     
     // Construtor
-    Imovel(Tipo imovel tipo, int proprietarioId, double lat, double lng, double preco, const string& endereco);
+    Imovel(TipoImovel tipo, int proprietarioId, double lat, double lng, double preco, const string& endereco);
     void exibirInformacoes();
 
     string getTipoAsString() const;
@@ -30,7 +30,7 @@ private:
     string endereco;
 };
 
-// Função auxiliar para converter uma string de entrada para o tipo enum TipoImovel
+// Funï¿½ï¿½o auxiliar para converter uma string de entrada para o tipo enum TipoImovel
 TipoImovel stringToTipo(const string& str);
 
 #endif

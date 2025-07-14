@@ -18,10 +18,10 @@ Imovel::Imovel(TipoImovel tipo, int proprietarioId, double lat, double lng, doub
 
 void Imovel::exibirInformacoes(){
     cout<< "Informações do imóvel"<< endl;
-    cout<< "Tipo: " << tipo << endl;
+    cout<< "Tipo: " << getTipoAsString() << endl;
     cout<< "Proprietário ID: " << proprietarioId << endl;
     cout<< "Latitude: " << lat << endl;
-    cout<< "Longitude: " << lon << endl;
+    cout<< "Longitude: " << lng << endl;
     cout<< "Preço: " << preco << endl;
     cout<< "Endereço: " << endereco << endl;
 }
@@ -29,15 +29,15 @@ void Imovel::exibirInformacoes(){
 // Converte o enum para sua representação em string
 string Imovel::getTipoAsString() const {
     switch (tipo) {
-    case CASA: return "Casa";
-    case APARTAMENTO: return "Apartamento";
-    case TERRENO: return "Terreno";
+    case TipoImovel::CASA: return "Casa";
+    case TipoImovel::APARTAMENTO: return "Apartamento";
+    case TipoImovel::TERRENO: return "Terreno";
     }
 }
 
 // Converte uma string da entrada para o enum correspondente
 TipoImovel stringToTipo(const string& str) {
-    if (str == "casa" || str == "Casa") return CASA;
-    if (str == "apartamento" || str == "Apartamento") return APARTAMENTO;
-    if (str == "terreno" || str == "Terreno") return TERRENO;
+    if (str == "casa" || str == "Casa") return TipoImovel::CASA;
+    if (str == "apartamento" || str == "Apartamento") return TipoImovel::APARTAMENTO;
+    if (str == "terreno" || str == "Terreno") return TipoImovel::TERRENO;
 }

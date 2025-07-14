@@ -5,11 +5,11 @@ using namespace std;
  
 //Construtor
 Corretor::Corretor(int telefone, bool avaliador, float lat, float lng, string nome){
-    telefone = telefone;
-    avaliador = avaliador;
-    lat = lat;
-    lng = lng;
-    nome = nome;
+    this->telefone = telefone;
+    this->avaliador = avaliador;
+    this->lat = lat;
+    this->lng = lng;
+    this->nome = nome;
 
 }
 
