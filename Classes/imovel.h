@@ -14,6 +14,8 @@ class Imovel {
 public:
     int id;
     TipoImovel tipo;
+    double lat;
+    double lng;
     
     // Construtor
     Imovel(TipoImovel tipo, int proprietarioId, double lat, double lng, double preco, const string& endereco);
@@ -24,8 +26,6 @@ public:
 private:
     static int nextId;
     int proprietarioId;
-    double lat;
-    double lng;
     double preco;
     string endereco;
 };
