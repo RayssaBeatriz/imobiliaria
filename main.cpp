@@ -1,67 +1,88 @@
 #include <iostream>
 #include <string>
-using namespace std;
+#include <vector>
+#include <iomanip>
+
 #include "Classes/imovel.h"
 #include "Classes/corretor.h"
 #include "Classes/cliente.h"
 
-int main() {
-    int nCorretores, nClientes, nImoveis;
-    cin>>nCorretores;
+using namespace std;
 
-    //Criar avaliadores
-    Corretor* corretores[nCorretores];
-    for(int i = 0; i <nCorretores; i++){
-        int telefoneAvaliador;;
+int main() {
+    vector<Corretor> todosCorretores;
+    vector<Corretor> corretoresAvaliadores;
+    vector<Cliente> clientes;
+    vector<Imovel> imoveis;
+    int nCorretores, nClientes, nImoveis;
+    
+    // Criar os corretores e adiciona à lista geral e lista de avaliadores
+    cin >> nCorretores;
+    for (int i = 0; i < nCorretores; i++) {
+        string telefoneAvaliador, nomeAvaliador;
         bool avaliador;
-        float lat, lng;
-        string nomeAvaliador;
-        cin >> telefoneAvaliador >> avaliador >> lat >> lng >> nomeAvaliador;
-        corretores[i] = new Corretor(telefoneAvaliador, avaliador, lat, lng, nomeAvaliador);
+        double lat, lng;
+        cin >> telefoneAvaliador >> avaliador >> lat >> lng;
+        getline(cin >> ws, nomeAvaliador); // Aqui o ws = whitespace manipulator e serve para descartar espaços em branco antes de ler o resto da linha
+ 
+
+        todosCorretores.emplace_back(nomeAvaliador, telefoneAvaliador, avaliador, lat, lng);
+    
+        if (avaliador) {
+        corretoresAvaliadores.push_back(todosCorretores.back()); // Adiciona uma cópia do último corretor criado à lista de avaliadores
+        }
     }
 
-    cin>>nClientes;
     //Criar clientes
-    Cliente* clientes[nClientes];
+    cin>>nClientes;
     for(int i = 0; i <nClientes; i++){
-        int telefoneCliente;
-        string nomeCliente;
-        cin >> telefoneCliente >> nomeCliente;
-        clientes[i] = new Cliente(nomeCliente, telefoneCliente);
+        string telefoneCliente, nomeCliente;
+        cin >> telefoneCliente;
+        getline(cin >> ws, nomeCliente);
+        clientes.emplace_back(nomeCliente, telefoneCliente);
     }
 
     //Criar imóveis
     cin>>nImoveis;
-    Imovel* imoveis[nImoveis];
     for(int i = 0; i <nImoveis; i++){
-        string tipoImovel;
+        string tipoImovel, endereco;
         int proprietarioId;
-        float lat, lon;
-        double preco;
-        string endereco;
-        cin >> tipoImovel >> proprietarioId >> lat >> lon >> preco >> endereco;
-        TipoImovel tipo = stringToTipo(tipoImovel);
-        imoveis[i] = new Imovel(tipo, proprietarioId, lat, lon, preco, endereco);
+        double lat, lng, preco;
+        cin >> tipoImovel >> proprietarioId >> lat >> lng >> preco;
+        getline(cin >> ws, endereco);
+        imoveis.emplace_back(stringToTipo(tipoImovel), proprietarioId, lat, lng, preco, endereco);
     }
 
-    //Exibir informações dos imóveis
-    for(int i = 0; i < nImoveis; i++){
-        imoveis[i]->exibirInformacoes();
-        cout << endl;
-    }   
-
-    //Exibir informações dos corretores
-    for(int i = 0; i < nCorretores; i++){ 
-        corretores[i]->exibirInformacoes();
-        cout << endl;
+    // Distribuir os imóveis pela estratégia round-robin
+    if (!corretoresAvaliadores.empty()) {
+        for (int i = 0; i < imoveis.size(); i++) {
+            corretoresAvaliadores[ i % corretoresAvaliadores.size() ].imoveisParaAvaliar.push_back(imoveis[i]);
+        }
     }
-    //Exibir informações dos clientes
-    for(int i = 0; i < nClientes; i++){
-        cout << "ID: " << clientes[i]->id << endl;
-        cout << "Nome: " << clientes[i]->nome << endl;
+
+    // Ordenar a rota para cada corretor pela estratégia do vizinho mais próximo
+    for (Corretor& corretor : corretoresAvaliadores) {
+        corretor.ordenarRota();
+    }
+
+    //Exibir informações da saída formatada
+    for(int i = 0; i < corretoresAvaliadores.size(); i++){
+        const Corretor& corretor = corretoresAvaliadores[i];
+
+        cout << "Corretor " << corretor.id << endl;
+        for (const Agenda& ag : corretor.agenda) {
+            // Aqui o setfill('0') e setw(2) é usado para garantir o formato HH:MM
+            cout << setfill('0') << setw(2) << ag.hora << ":"
+                << setfill('0') << setw(2) << ag.minuto
+                << " Imovel " << ag.imovelId << endl;
+        }
+
+        // Linha em branco entre os agendamentos de cada corretor exceto o último
+        if (i < corretoresAvaliadores.size() - 1) {
+            cout << endl;
+        }
     }
     
-
 
     return 0;
 }
