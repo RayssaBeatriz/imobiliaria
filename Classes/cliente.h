@@ -12,7 +12,7 @@ public:
     string nome;
     string telefone;
 
-    Cliente(const string& nome, const int telefone);
+    Cliente(const string& nome, const string& telefone);
 
 private:
     static int nextId;
