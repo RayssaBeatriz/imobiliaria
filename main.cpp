@@ -55,7 +55,7 @@ int main() {
 
     // Distribuir os imóveis pela estratégia round-robin
     if (!corretoresAvaliadores.empty()) {
-        for (int i = 0; i < imoveis.size(); i++) {
+        for (size_t i = 0; i < imoveis.size(); i++) {
             corretoresAvaliadores[ i % corretoresAvaliadores.size() ].imoveisParaAvaliar.push_back(imoveis[i]);
         }
     }
@@ -66,7 +66,7 @@ int main() {
     }
 
     //Exibir informações da saída formatada
-    for(int i = 0; i < corretoresAvaliadores.size(); i++){
+    for(size_t i = 0; i < corretoresAvaliadores.size(); i++){
         const Corretor& corretor = corretoresAvaliadores[i];
 
         cout << "Corretor " << corretor.id << endl;
@@ -74,7 +74,7 @@ int main() {
             // Aqui o setfill('0') e setw(2) é usado para garantir o formato HH:MM
             cout << setfill('0') << setw(2) << ag.hora << ":"
                 << setfill('0') << setw(2) << ag.minuto
-                << " Imovel " << ag.imovelId << endl;
+                << " Imóvel " << ag.imovelId << endl;
         }
 
         // Linha em branco entre os agendamentos de cada corretor exceto o último
@@ -86,4 +86,3 @@ int main() {
 
     return 0;
 }
-

@@ -6,7 +6,7 @@ using namespace std;
 #define IMOVEL_H
 
 enum class TipoImovel {
-    CASA, APARTAMENTO, TERRENO
+    CASA, APARTAMENTO, TERRENO, OUTRO
 };
 
 //Classe imovel

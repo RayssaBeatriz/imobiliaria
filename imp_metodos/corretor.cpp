@@ -69,7 +69,7 @@ void Corretor::ordenarRota() {
         // Encontra o imóvel com menor tempo de viagem considerando 2 min por km arredondado
         for (size_t i = 0; i < imoveisNaoVisitados.size(); ++i) {
             double distancia = haversine(latAtual, lngAtual, imoveisNaoVisitados[i].lat, imoveisNaoVisitados[i].lng);
-            int tempoViagem = round(distancia * 2.0);
+            int tempoViagem = floor(distancia * 2.0);
 
             if (tempoViagem < menorTempoViagem) {
                 menorTempoViagem = tempoViagem;

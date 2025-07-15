@@ -32,6 +32,7 @@ string Imovel::getTipoAsString() const {
     case TipoImovel::CASA: return "Casa";
     case TipoImovel::APARTAMENTO: return "Apartamento";
     case TipoImovel::TERRENO: return "Terreno";
+    default: return "Desconhecido";
     }
 }
 
@@ -40,4 +41,5 @@ TipoImovel stringToTipo(const string& str) {
     if (str == "casa" || str == "Casa") return TipoImovel::CASA;
     if (str == "apartamento" || str == "Apartamento") return TipoImovel::APARTAMENTO;
     if (str == "terreno" || str == "Terreno") return TipoImovel::TERRENO;
+    return TipoImovel::OUTRO; 
 }
